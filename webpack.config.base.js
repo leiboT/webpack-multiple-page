@@ -5,11 +5,11 @@ const glob = require("glob");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // 抽取 css
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-// 通过 html-webpack-plugin 生成的 HTML 集合
-let HTMLPlugins = [];
+//路径定义
+let srcDir = __dirname + "/src";
 // 入口文件集合 调用entries函数即可
 let entries= function () {
-    let jsDir = path.resolve(__dirname, '../src/js');
+    let jsDir = srcDir + "/js";
     let entryFiles = glob.sync(jsDir + '/*.{js,jsx}');
     let map = {};
 
@@ -21,8 +21,6 @@ let entries= function () {
     return map;
 };
 
-//路径定义
-let srcDir = path.resolve(process.cwd(), 'src');
 //html_webpack_plugins 定义
 let html_plugins = function () {
     let entryHtml = glob.sync(srcDir + '/*.html')
@@ -33,7 +31,8 @@ let html_plugins = function () {
         let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
         let conf = {
             template: 'html-withimg-loader!' + path.resolve(srcDir, filePath),
-            filename: filename + '.html'
+            filename: filename + '.html',
+            favicon: './favicon.ico',
         }
         //如果和入口js文件同名
         if (filename in entriesFiles) {
@@ -71,7 +70,7 @@ let plugin = [];
 plugin.push(
     // 将 样式 抽取到某个文件夹
     new ExtractTextPlugin({
-        filename: 'css/[name].css'
+        filename: 'css/[name].[hash].css'
     }),
     new webpack.ProvidePlugin({
         $:"jquery",
@@ -80,45 +79,47 @@ plugin.push(
     })
 );
 
+// 获取环境命令，并去除首尾空格
+const env = process.env.NODE_ENV.replace(/(\s*$)|(^\s*)/ig,"");
+
 module.exports = {
     //entry: entries(),
     entry: Object.assign(entries(), {'vendor': ['jquery','bootstrap']}),
-    devtool: "eval-source-map",
     output: {
         filename: "js/[name].[hash].js",
-        path: path.resolve(__dirname, "../dist"),
-        publicPath: './',
+        path: __dirname + "/dist",
+        publicPath: env === 'dev' ? 'http://localhost:8080/' : './',
         chunkFilename: "[name].[chunkHash:8].js",
     },
     // 加载器
     module: {
         rules: [
-            // {
-            //     // 对 css 后缀名进行处理
-            //     test: /\.css$/,
-            //     // 不处理 node_modules 文件中的 css 文件
-            //     exclude: /node_modules/,
-            //     // 抽取 css 文件到单独的文件夹
-            //     use: ExtractTextPlugin.extract({
-            //         fallback: "style-loader",
-            //         // 设置 css 的 publicPath
-            //         //publicPath: config.cssPublicPath,
-            //         use:
-            //             [
-            //                 {
-            //                     loader: "css-loader",
-            //                     options: {
-            //                         //modules: true,
-            //                         // 开启 css 压缩
-            //                         minimize: true,
-            //                     }
-            //                 },
-            //                 {
-            //                 loader: "postcss-loader",
-            //                 }
-            //             ]
-            //     })
-            // },
+            {
+                // 对 css 后缀名进行处理
+                test: /\.css$/,
+                // 不处理 node_modules 文件中的 css 文件
+                exclude: /node_modules/,
+                // 抽取 css 文件到单独的文件夹
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    // 设置 css 的 publicPath
+                    //publicPath: config.cssPublicPath,
+                    use:
+                        [
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    //modules: true,
+                                    // 开启 css 压缩
+                                    minimize: true,
+                                }
+                            },
+                            {
+                            loader: "postcss-loader",
+                            }
+                        ]
+                })
+            },
             {
                 test: /\.stylus$/,
                 use: ExtractTextPlugin.extract({
@@ -134,6 +135,12 @@ module.exports = {
                                 }
                             },
                             {
+                                loader: "postcss-loader",
+                                options: {
+                                    sourceMap: true
+                                }
+                            },
+                            {
                                 loader: "stylus-loader",
                             }
                         ]
@@ -143,17 +150,20 @@ module.exports = {
                 test:  /\.js$/,
                 exclude: /node_modules|lib/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    query: {
+                        presets: ['es2015']
+                    }
                 }
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                test: /\.(png|jpg|gif|svg)(\?.*)?$/,
                 exclude: /fonts/,
                 use:{
                     loader: "url-loader",
                     options:{
                         limit: 10000,
-                        name: path.posix.join('', 'img/[name].[hash:7].[ext]')
+                        name: path.posix.join('img/[name].[hash:7].[ext]')
                     }
                 }
                 // use:{
@@ -172,18 +182,26 @@ module.exports = {
                 use:{
                     loader: "url-loader",
                     options:{
-                        limit: 10000,
-                        name: path.posix.join('', 'fonts/[name].[hash:7].[ext]')
+                        limit: 50000,
+                        name: path.posix.join('fonts/[name].[hash:7].[ext]')
                     }
                 }
-            }
+            },
+            {
+                test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: path.posix.join('media/[name].[ext]')
+                }
+            },
         ],
     },
     resolve: {
         extensions: [ '.js', '.css', '.stylus', '.tpl', '.png', '.jpg'],
         alias: {
-            "bootstrap": path.resolve(srcDir, 'js/lib/bootstrap.js'),
-            "jquery": path.resolve(srcDir, 'js/lib/jquery-1.12.4.js'),
+            "bootstrap": path.join(srcDir, 'js/lib/bootstrap.js'),
+            "jquery": path.join(srcDir, 'js/lib/jquery-1.12.4.js'),
         }
     },
     plugins: plugin.concat(html_plugins())
