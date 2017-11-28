@@ -5,11 +5,9 @@ const webpackBase = require("./webpack.config.base");
 const webpackMerge = require("webpack-merge");
 // 引入 webpack
 const webpack = require("webpack");
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 // 清理 dist 文件夹
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-//指向当前目录的上级目录
-let rootPath = path.resolve(__dirname, '..');
 // 合并配置文件
 module.exports = webpackMerge(webpackBase,{
     plugins:[
@@ -18,7 +16,7 @@ module.exports = webpackMerge(webpackBase,{
 
             ['dist'],　 //匹配删除的文件
             {
-                root: rootPath,       　　　　　　　　　　//根目录
+                root: __dirname,       　　　　　　　　　　//根目录
                 verbose:  true,        　　　　　　　　　　//开启在控制台输出信息
                 dry:      false        　　　　　　　　　　//启用删除文件
             }),
@@ -50,7 +48,7 @@ module.exports = webpackMerge(webpackBase,{
         }),
         new CopyWebpackPlugin([
             {
-                from: path.resolve(__dirname, '../src/css'),
+                from: path.resolve(__dirname, './src/css'),
                 to: 'css',
                 ignore: ['.*']
             }
