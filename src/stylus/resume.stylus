@@ -1,0 +1,155 @@
+@media (min-width: 992px)
+  .scroll-wrapper
+    padding-top 50px
+  .play-wrapper
+    margin-bottom 0 !important
+    margin-top 5px
+  .volume-wrapper
+    margin-top 7px !important
+.nav-wrapper
+  background-color #fff !important
+  box-shadow 0 0.125em 0.25em 0 rgba(0,0,0,.11)
+  .talk-wrapper
+    .text
+      vertical-align top
+      margin-left 4px
+    .phone
+      .text
+        color #252525
+      .icon-phone
+        font-size 20px
+        vertical-align top
+        color #252525
+    .qq
+      .text
+        color #E80300
+      .icon-qq
+        font-size 20px
+        vertical-align top
+        color #E80300
+    .wx
+      .text
+        color #72BD63
+      .icon-wei_xin
+        font-size 20px
+        vertical-align top
+        color #72BD63
+.scroll-wrapper
+  position absolute
+  top 51px
+  right 0
+  bottom 0
+  left 0
+  overflow hidden
+.container-wrapper
+  user-select none
+  .content-wrapper
+    margin-bottom 10px
+    .portrait
+      width 200px
+      height 200px
+      margin 0 auto
+      border-radius 50%
+      background url('../img/portrait.jpg') no-repeat center center
+    .intro
+      .name,.job
+        color #333
+        font-weight 700
+        line-height 1
+        margin-top 1em
+      .name
+        font-size 1.4em
+      .job
+        font-size 1.2em
+    .icon-wrapper
+      font-size 0
+      .icon-github,.icon-jian
+        text-decoration none
+        font-size 25px
+        padding 6px
+.audio-wrapper
+  user-select none
+  background #57574A
+  padding 15px 0
+  transition all 0.4s ease-out;
+  .play-wrapper
+    font-size 0
+    margin-bottom 10px
+    &>span
+      font-size 20px
+      line-height 24px
+      color #fff
+      display inline-block
+      vertical-align top
+      cursor pointer
+    .play-pause
+      font-size 24px
+      margin 0 30px
+  .time-wrapper
+    position relative
+    .name,.time-length
+      font-size 16px
+      color #fff
+      position absolute
+      top 0
+    .name
+      left 15px
+    .time-length
+      right 15px
+    .time-bar
+      position relative
+      height 34px
+      border-radius 4px
+      border-bottom 4px solid #818177
+      .time-move-bar
+        height 4px
+        width 0
+        border-radius 4px
+        background-color #fff
+        position absolute
+        bottom -4px
+        left 0
+        .time-move-btn
+          width 14px
+          height 14px
+          border-radius 50%
+          background-color #fff
+          position absolute
+          right -7px
+          top -4px
+          cursor pointer
+  .volume-wrapper
+    font-size 0
+    margin-top 24px
+    .on-off
+      font-size 20px
+      color #fff
+      display inline-block
+      vertical-align middle
+      margin-right 14px
+      cursor pointer
+    .volume-bar
+      position relative
+      display inline-block
+      vertical-align middle
+      width 150px
+      height 4px
+      background #818177
+      border-radius 4px
+      .volume-move-bar
+        height 4px
+        width 50%
+        border-radius 4px
+        background-color #fff
+        position absolute
+        bottom 0
+        left 0
+        .volume-move-btn
+          width 14px
+          height 14px
+          border-radius 50%
+          background-color #fff
+          position absolute
+          right -7px
+          top -4px
+          cursor pointer
