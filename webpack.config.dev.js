@@ -1,10 +1,22 @@
-const path = require("path");
+const webpack = require("webpack");
 // 引入基础配置文件
 const webpackBase = require("./webpack.config.base");
 // 引入 webpack-merge 插件
 const webpackMerge = require("webpack-merge");
 // 合并配置文件
 module.exports = webpackMerge(webpackBase,{
+    devtool: "eval-source-map",
+    // 配置 webpack-dev-server
+    devServer:{
+        // 项目根目录
+        contentBase: './dist',
+        //hot: true,
+        //historyApiFallback: true,//所有的跳转都将指向index.html
+        inline: true//源文件改变刷新页面
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
     // module: {
     //     rules: [
     //         {
@@ -23,17 +35,4 @@ module.exports = webpackMerge(webpackBase,{
     //         },
     //     ]
     // },
-    // 配置 webpack-dev-server
-    devServer:{
-        // 项目根目录
-        contentBase: path.join(__dirname, "../dist"),
-        compress: true,
-        // 错误、警告展示设置
-        overlay:{
-            errors:true,
-            warnings:true
-        },
-        //historyApiFallback: true,//所有的跳转都将指向index.html
-        inline: true//源文件改变刷新页面
-    }
 });
