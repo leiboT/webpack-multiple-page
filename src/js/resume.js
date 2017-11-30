@@ -8,6 +8,7 @@ import '../media/zmz.ogg';
 import BScroll from 'better-scroll';
 
 window.onload = function (){
+    console.log('项目源码:https://github.com/leiboT/webpack-multiple-page');
     let resizeTimer = false;
     window.onresize = function (){
         if(!resizeTimer){
@@ -128,13 +129,13 @@ window.onload = function (){
             //重点 --哇 今晚被这一句坑惨 资源切换记住加上load();
             audio.load();
             audio.addEventListener("canplay", function(){
-                audioWrapper.style = "transform: translate3D(0,0,0)";
                 dataDuration = audio.duration;
+                dataDuration ? audioWrapper.style = "transform: translate3D(0,0,0)" : audioWrapper.style = "display: none;";
                 timeLength.textContent = parseInt(audio.duration/60)+":"+Math.round(audio.duration%60);
             });
         }
 
-        let musicIndex = 1; //音乐列表索引
+        let musicIndex = 0; //音乐列表索引
         loadChangeMusic(musicIndex);
         let musicMaxLength = musicList.length - 1; //音乐列表最大长度
 
@@ -187,7 +188,7 @@ window.onload = function (){
                 //重置播放状态
                 timeMoveBar.style = 'width: 0%';
                 paused ? audio.pause() : audio.play();
-            }else if(classStr.indexOf('forward' )  !== -1){
+            }else if(classStr.indexOf('forward')  !== -1){
                 //切换需先暂停
                 audio.pause();
                 musicIndex ++;
