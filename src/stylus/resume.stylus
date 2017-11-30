@@ -1,3 +1,7 @@
+primary-color =  #337AB7
+user-select-none()
+  user-select none
+
 @media (min-width: 992px)
   .scroll-wrapper
     padding-top 50px
@@ -6,34 +10,29 @@
     margin-top 5px
   .volume-wrapper
     margin-top 7px !important
+
 .nav-wrapper
   background-color #fff !important
   box-shadow 0 0.125em 0.25em 0 rgba(0,0,0,.11)
   .talk-wrapper
+    &>li>a
+      padding 0
+      margin 3px 20px
+      border-bottom 2px solid transparent
+      transition all 0.1s
+    &>li:hover a
+      background-color transparent
+      border-bottom-color primary-color
+    &>li:hover a>span
+      color primary-color
     .text
+      color #252525
       vertical-align top
       margin-left 4px
-    .phone
-      .text
-        color #252525
-      .icon-phone
-        font-size 20px
-        vertical-align top
-        color #252525
-    .qq
-      .text
-        color #E80300
-      .icon-qq
-        font-size 20px
-        vertical-align top
-        color #E80300
-    .wx
-      .text
-        color #72BD63
-      .icon-wei_xin
-        font-size 20px
-        vertical-align top
-        color #72BD63
+    [class^="icon-"], [class*=" icon-"]
+      font-size 20px
+      vertical-align top
+      color #252525
 .scroll-wrapper
   position absolute
   top 51px
@@ -42,7 +41,7 @@
   left 0
   overflow hidden
 .container-wrapper
-  user-select none
+  user-select-none()
   .content-wrapper
     margin-bottom 10px
     .portrait
@@ -67,8 +66,11 @@
         text-decoration none
         font-size 25px
         padding 6px
+  .technology-wrapper
+    .title
+      font-weight 700
 .audio-wrapper
-  user-select none
+  user-select-none()
   background #57574A
   padding 15px 0
   transition all 0.4s ease-out;
