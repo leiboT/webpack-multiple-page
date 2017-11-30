@@ -182,7 +182,7 @@ module.exports = {
                 use:{
                     loader: "url-loader",
                     options:{
-                        limit: 50000,
+                        limit: 10000,
                         name: path.posix.join('fonts/[name].[hash:7].[ext]')
                     }
                 }
