@@ -78,7 +78,7 @@ window.onload = function (){
 
 
     //添加播放器
-    if(!!document.createElement('video').canPlayType){
+    if(document.createElement('video').canPlayType && !isMobile){
         let audio = document.createElement("audio");
         audio.setAttribute('id', 'my-audio');
         audio.autobuffer = true;
