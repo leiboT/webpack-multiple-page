@@ -88,7 +88,7 @@ module.exports = {
     output: {
         filename: "js/[name].[hash].js",
         path: __dirname + "/dist",
-        publicPath: env === 'dev' ? 'http://localhost:8080/' : './',
+        publicPath: env === 'dev' ? 'http://localhost:8080/' : '/resume/',
         chunkFilename: "[name].[chunkHash:8].js",
     },
     // 加载器
