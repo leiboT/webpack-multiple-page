@@ -8,6 +8,7 @@
 ![](http://leibo.group/image/resume/1.png)
 ![](http://leibo.group/image/resume/2.png)
 ![](http://leibo.group/image/resume/3.png)
+![](http://leibo.group/image/resume/4.png)
 
 ## 有问题
 可以用以下联系方式跟我交流
