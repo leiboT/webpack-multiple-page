@@ -1,10 +1,12 @@
 import '../stylus/icon.stylus';
 import '../stylus/resume.stylus';
 import '../csslib/bootstrap.css';
-import '../media/ry.mp3';
-import '../media/ry.ogg';
-import '../media/zmz.mp3';
-import '../media/zmz.ogg';
+import '../media/ycsr.mp3';
+import '../media/ycsr.ogg';
+import '../media/zdqd.mp3';
+import '../media/zdqd.ogg';
+import '../media/tbdr.mp3';
+import '../media/tbdr.ogg';
 import BScroll from 'better-scroll';
 
 window.onload = function (){
@@ -98,14 +100,19 @@ window.onload = function (){
         //音乐数据
         let musicList = [
             {
-                'name': '造梦者',
-                'author': '以冬',
-                'flag': 'zmz'
+                'name': '吟唱诗人',
+                'author': '李常超',
+                'flag': 'ycsr'
             },
             {
-                'name': '热勇',
-                'author': '栗先达',
-                'flag': 'ry'
+                'name': '特别的人',
+                'author': '方大同',
+                'flag': 'tbdr'
+            },
+            {
+                'name': '终点起点',
+                'author': '低调组合',
+                'flag': 'zdqd'
             }
         ];
         audioCtr(audio, audioWrapper, musicList);
